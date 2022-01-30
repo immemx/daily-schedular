@@ -1,6 +1,4 @@
 //GIVEN I am using a daily planner to create a schedule
-//WHEN I scroll down
-//THEN I am presented with time blocks for standard business hours
 //WHEN I view the time blocks for that day
 //THEN each time block is color-coded to indicate whether it is in the past, present, or future
 //WHEN I click into a time block
@@ -12,7 +10,17 @@
 
 // variables
 var businessHours = ["9am", '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']
-const timeContainer = document.querySelector(".time-block") 
+var timeContainer = document.querySelector(".time-block") 
+
+let nineAM = moment('9am', 'ha');
+let tenAM = moment('10am', 'ha');
+let elevenAM = moment('11am', 'ha');
+let twelvePM = moment('12pm', 'ha');
+let onePM = moment('1pm', 'ha');
+let twoPM = moment('2pm', 'ha');
+let threePM = moment('3pm', 'ha');
+let fourPM = moment('4pm', 'ha');
+let fivePM = moment('5pm', 'ha');
 
 
 // Display current date at the top of the page
@@ -22,24 +30,43 @@ var currentDate = function() {
     currentDayEl.textContent = currentTime.format("dddd, MMMM DD")
 }
 
-// Dynamically create HTML elements for each hour on the schedule. 
-var createSchedule = function() {
+var loadSchedule = function() {
+    var schedule = JSON.parse(localStorage.getItem("schedule"));
 
-    // Create Elements
-    for (var i = 0; i >= businessHours.length; i++){
+    if (schedule != null) {
+        var times = Object.keys(schedule);
+    }
+}
 
-        var scheduleRow = document.createElement("div")
-        scheduleRow.className = "col-12"
 
-        var scheduleTime = document.createElement("p")
-        scheduleTime.innerHTML = businessHours[i]
-        scheduleTime.className = "hour"
+// looping over bussinessHours array
+for (var i = 0; i <= businessHours.length; i++) {
 
-        scheduleRow.appendChild(scheduleTime)
-        timeContainer.appendChild(scheduleRow)
+    // set currentHour to be momentjs in hour am/pm format
+    var currentHour = moment().format("ha");
 
+    var checkBusinessHour = moment(businessHours[i], 'ha')
+    // Cycling through businessHours array looking for a class with the same name on the DOM.
+    var checkedTimeBlock = document.getElementsByClassName(businessHours[i])
+    
+    // checking to see if the current hour is past/before each time block
+    if (currrentHour === businessHours[i]){
+        console.log("true")
+    } 
+    else if (currentHour > businessHours[i]){
+    
+    }
+    else if (currentHour < businessHours[i]){
+
+    }
+    else {
+        console.log("Man, its broken")
     };
-};
+
+
+    
+}
+
 
 currentDate()
 
