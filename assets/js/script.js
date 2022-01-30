@@ -8,6 +8,9 @@
 //WHEN I refresh the page
 //THEN the saved events persist
 
+// Jquery waiting until its loaded to run this.
+$(document).ready(function() {
+
 // variables
 var businessHours = ["9am", '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']
 var timeContainer = document.querySelector(".time-block") 
@@ -50,7 +53,7 @@ for (var i = 0; i <= businessHours.length; i++) {
     var checkedTimeBlock = document.getElementsByClassName(businessHours[i])
     
     // checking to see if the current hour is past/before each time block
-    if (currrentHour === businessHours[i]){
+    if (currentHour === businessHours[i]){
         console.log("true")
     } 
     else if (currentHour > businessHours[i]){
@@ -68,6 +71,20 @@ for (var i = 0; i <= businessHours.length; i++) {
 }
 
 
+$('.saveBtn').on('click', function() {
+
+    console.log($(".saveBtn").siblings(".form"))
+    // siblings method to get adjacent textbox 
+    // sibilings method to figure out what time block it is
+    console.log($(this))
+
+})
+
+
+
+
+
 currentDate()
 
 
+})
