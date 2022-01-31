@@ -63,10 +63,10 @@ for (var i = 0; i <= businessHours.length; i++) {
     if (currentHour === businessHours[i]){
         $('.form').addClass("present");
     } 
-    else if (currentHour > businessHours[i]){
+    else if (currentHour < businessHours[i]){
         $('.form').addClass("future");
     }
-    else if (currentHour < businessHours[i]){
+    else if (currentHour > businessHours[i]){
         $('.form').addClass("past");
         console.log("this is working!")
     };
