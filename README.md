@@ -1,4 +1,4 @@
-# Password-Generator
+# Daily-Schedular
 
 This application uses javascript, dom elements, jQuery, and API's to make a dynamic daily scheduler.
 
