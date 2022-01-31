@@ -9,11 +9,12 @@
 //THEN the saved events persist
 
 // Jquery waiting until its loaded to run this.
-$(document).ready(function() {
+//$(document).ready(function() {
 
 // variables
 var businessHours = ["9am", '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']
 var timeContainer = document.querySelector(".time-block") 
+var scheduleArr = []
 
 let nineAM = moment('9am', 'ha');
 let tenAM = moment('10am', 'ha');
@@ -31,15 +32,21 @@ var currentDate = function() {
     var currentDayEl = document.querySelector("#currentDay");
     var currentTime = moment();
     currentDayEl.textContent = currentTime.format("dddd, MMMM DD")
-}
+};
 
+//
 var loadSchedule = function() {
-    var schedule = JSON.parse(localStorage.getItem("schedule"));
 
-    if (schedule != null) {
-        var times = Object.keys(schedule);
-    }
+    $(".hour").each(function() {
+        var currentHour = $(this).text();
+        var currentPlan = localStorage.getItem(currentHour);
+
+        if(currentPlan !== null) {
+            $(this).siblings(".form").val(currentPlan);
+        }
+    });
 }
+
 
 
 // looping over bussinessHours array
@@ -54,37 +61,48 @@ for (var i = 0; i <= businessHours.length; i++) {
     
     // checking to see if the current hour is past/before each time block
     if (currentHour === businessHours[i]){
-        console.log("true")
+        $('.form').addClass("present");
     } 
     else if (currentHour > businessHours[i]){
-    
+        $('.form').addClass("future");
     }
     else if (currentHour < businessHours[i]){
-
-    }
-    else {
-        console.log("Man, its broken")
+        $('.form').addClass("past");
+        console.log("this is working!")
     };
-
-
     
+};
+
+
+var saveSchedule = function(row, descriptionText) {
+
+    $(".hour").each(function() {
+        var currHour = $(this).text();
+        var currPlan = localStorage.getItem(currHour);
+
+        // console.log(this);
+        // console.log(currHour);
+
+        if(currPlan !== null) {
+            $(this).siblings(".plan").val(currPlan);
+        }
+    });
 }
 
-
+// Save buttone jQuery Listener - Finds corresponding text and and pushed data to save.
 $('.saveBtn').on('click', function() {
-
-    console.log($(".saveBtn").siblings(".form"))
     // siblings method to get adjacent textbox 
     // sibilings method to figure out what time block it is
-    console.log($(this))
 
-})
+    // Use the sibling method to grab corresponding textarea
+    var row = $(this).siblings(".hour").text();
+    var description = $(this).siblings(".form").val();
 
+    // Update Local storage with new save
+    localStorage.setItem(row, description);
 
+});
 
-
-
-currentDate()
-
-
-})
+loadSchedule();
+currentDate();
+//})
